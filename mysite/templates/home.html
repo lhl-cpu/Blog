@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   我的网站
+{% endblock %}
+
+{% load staticfiles %}
+{% block head_extends %}
+    <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block home_active %}
+    active
+{% endblock %}
+
+{% block content %}
+<h3 class="home"><b>LHL BLOGS</b></h3>
+<p>
+    只为原创，发表个人原创高质量的技术博客
+</p>
+<p class="p2">
+    lhl的博客
+</p>
+
+<div id="container" style="width: 600px;height:350px;backgroundColor:#535353;">
+    <script>
+        // 图表配置
+        var options = {
+            chart: {
+                type: 'line'                          //指定图表的类型，默认是折线图（line）
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                title :{
+                    text:"最近七日阅读量"
+                } ,
+                categories: {{ dates|safe }},   // x 轴分类
+                tickmakePlacement: 'on',
+            },
+            yAxis: {
+                title: {
+                    text: null
+                }
+            },
+            series: [{                              // 数据列
+                name: '阅读量',                        // 数据列名
+                data: {{ read_nums }}                     // 数据
+            }],
+            legend:{enabled: false},
+            credits:{ enabled: false},// 禁用版权信息
+            plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+            }
+          };
+       
+        // 图表初始化函数
+        var chart = Highcharts.chart('container', options);
+    </script>
+</div>
+
+<div class="hot">
+    <h4>今日热点博客：</h4>
+    <ul>
+        {% for hot_read in get_today_hot %}
+            <li><a href="{% url 'blog_tital' hot_read.object_id %}">{{ hot_read.content_object }}({{ hot_read.read_num }})</a></li>
+        {% empty %}
+            <li>暂无热点博客内容</li>
+        {% endfor %}
+    </ul>
+    <h4>昨日热点博客：</h4>
+    <ul>
+        {% for hot_read in get_yesterday_hot %}
+            <li><a href="{% url 'blog_tital' hot_read.object_id %}">{{ hot_read.content_object }}({{ hot_read.read_num }})</a></li>
+        {% empty %}
+            <li>暂无热点博客内容</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

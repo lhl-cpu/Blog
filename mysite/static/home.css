@@ -1,0 +1,41 @@
+h3.home{
+    font-size: 222%;
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%,-50%);
+    color: #ADADAD;
+}
+p{
+    font-size: 130%;
+    position: absolute;
+    left: 50%;
+    top: 36%;
+    transform: translate(-50%,-50%);
+    font-weight:lighter;
+}
+p.p2{
+    font-size: 130%;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%,-50%);
+    font-weight:lighter;
+}
+div#container{
+    position: absolute;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%,-50%);
+    backgroundColor:#535353;
+}
+div.hot ul{
+    list-style-type: none;
+}
+div.hot ul li{
+    margin-right: 2em;
+}
+body{
+    color: #999999;
+    background-color: #353535;
+}
