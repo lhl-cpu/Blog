@@ -2,7 +2,7 @@ h3.home{
     font-size: 222%;
     position: absolute;
     left: 50%;
-    top: 25%;
+    top: 20%;
     transform: translate(-50%,-50%);
     color: #ADADAD;
 }
@@ -10,7 +10,7 @@ p{
     font-size: 130%;
     position: absolute;
     left: 50%;
-    top: 36%;
+    top: 31%;
     transform: translate(-50%,-50%);
     font-weight:lighter;
 }
@@ -18,17 +18,23 @@ p.p2{
     font-size: 130%;
     position: absolute;
     left: 50%;
-    top: 40%;
+    top: 35%;
     transform: translate(-50%,-50%);
     font-weight:lighter;
 }
 div#container{
     position: absolute;
-    left: 50%;
+    left: 60%;
     top: 70%;
     transform: translate(-50%,-50%);
-    backgroundColor:#535353;
 }
+div.hot{
+    position: absolute;
+    left: 20%;
+    top: 60%;
+    transform: translate(-50%,-50%);
+}
+
 div.hot ul{
     list-style-type: none;
 }

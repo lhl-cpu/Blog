@@ -57,9 +57,3 @@ def get_yesterday_hot(content_type):
     yesterday = today - datetime.timedelta(days=1)
     read_detail = Read_detial.objects.filter(content_type=content_type,date=yesterday).order_by('-read_num')
     return read_detail[:5]
-
-def get_senvenday_hot(content_type):
-    today = timezone.now().date()
-    date = today - datetime.timedelta(days=7)
-    read_detail = Read_detial.objects.filter(content_type=content_type,date=date).order_by('-read_num')
-    return read_detail[:5]
