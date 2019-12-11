@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   登录
+{% endblock %}
+
+{% load staticfiles %}
+{% block head_extends %}
+    <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">登录</h3>
+                  </div>
+                  <div class="panel-body">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {% for login in login_form %}
+                            <label for="{{ login.id_for_label }}">{{ login.label }}</label>
+                            {{ login }}
+                            <p class="text-danger">{{ login.errors.as_text }}</p>
+                        {% endfor %}
+                    <span class="text-danger pull-left">{{ login_form.non_field_errors }}</span>
+                    <button class="btn btn-primary pull-right"><a href="{% url 'register' %}" style="color:white;">注册</a></button>
+                    <input type="submit" value="登录" class="btn btn-primary pull-right">
+                    </form>
+                  </div>
+                </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

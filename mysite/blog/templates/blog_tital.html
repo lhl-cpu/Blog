@@ -45,5 +45,51 @@ active
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="comment-area">
+                <h3 class="comment-area-title">提交评论：</h3>
+            {% if user.is_authenticated %}
+                
+                <form action="{% url 'upload_comment' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="comment_text">{{ user.username }}, 欢迎评论~</label>
+                        <textarea name="text" id="comment_text" class="form-control" rows="3"></textarea>
+                    </div>
+                    <input type="hidden" name="object_id", value="{{ blog.pk }}">
+                    <input type="hidden" name="content_type" value="blog">
+                    <input type="submit" value="发表" class="btn btn-primary">
+                </form>
+            {% else %}
+                <h4>文明评论，请先登录！</h4>
+                <button class="btn btn-primary"><a href="{% url 'login' %}?from={{ request.get_full_path }}" style="color:white;">登录</a></button>
+                <button class="btn btn-primary"><a href="{% url 'register' %}?from={{ request.get_full_path }}" style="color:white;">注册</a></button>
+            {% endif %}
+            </div>
+            <div class="comment-area">
+                <h3 class="comment-area-title">评论列表：</h3>
+                <table class="table table-hover">
+                    <tr>
+                        <td>评论内容：</td>
+                        <td>评论时间：</td>
+                        <td>评论者：</td>
+                    </tr>
+                    {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.text }}</td>
+                        <td>{{ comment.comment_time|date:"Y-m-d H:n:s" }}</td>
+                        <td>{{ comment.user.username }}</td>
+                    </tr>
+                    {% empty %}
+                        <tr>
+                            <td>暂无评论！</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                 
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

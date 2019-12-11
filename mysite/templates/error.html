@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   登录错误
+{% endblock %}
+
+{% load staticfiles %}
+{% block head_extends %}
+    <link rel="stylesheet" type="text/css" href="{% static "home.css" %}">
+    <script src="http://cdn.highcharts.com.cn/highcharts/highcharts.js"></script>
+{% endblock %}
+
+{% block content %}
+<h3>{{ error_message }}</h3><a href="{{ redirect_to }}">返回上页</a>
+{% endblock %}
