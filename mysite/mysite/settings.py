@@ -131,12 +131,31 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 #配置ckeditor
 CKEDITOR_UPLOAD_PATH = 'upload/'
 
+CKEDITOR_CONFIGS = {
+    'comment_ckeditor': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList'],
+            ['TextColor', 'BGColor'],
+            ['Link', 'Unlink'],
+            ['Smiley', 'SpecialChar', 'Blockquote']
+        ],
+        'tablSpaces': 4,
+        'height': 180,
+        'width': 'auto',
+        'removePlugins':'elementspath',
+        'resize_enabled':False,
+    }
+}
+
 #配置静态文件
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
+
 
 #设置缓存
 CACHES = {

@@ -5,6 +5,7 @@ from .models import Blog,BlogType
 from django.contrib.contenttypes.models import ContentType
 from comment.models import Comment
 from Read_count.util import read_count_make
+from comment.forms import CommentForm
 
 blog_each_num_page = 8
 
@@ -80,6 +81,7 @@ def blog_tital(request,blog_id):
     context['previous_blog'] = Blog.objects.filter(created_time__gt=blog.created_time).last()
     context['next_blog'] = Blog.objects.filter(created_time__lt=blog.created_time).first()
     context['blog'] = blog
+    context['comment_forms'] = CommentForm(initial={'content_type':blog_content_type.model,'object_id':blog_id})
     context['comments'] = comments
     response = render(request, 'blog_tital.html', context)#响应
     response.set_cookie(getkey ,'true')

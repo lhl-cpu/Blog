@@ -9,6 +9,8 @@ active
 {% load staticfiles %}
 {% block head_extends %}
     <link rel="stylesheet" type="text/css" href="{% static "blog.css" %}">
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -50,16 +52,13 @@ active
             <div class="comment-area">
                 <h3 class="comment-area-title">提交评论：</h3>
             {% if user.is_authenticated %}
-                
                 <form action="{% url 'upload_comment' %}" method="POST">
                     {% csrf_token %}
-                    <div class="form-group">
-                        <label for="comment_text">{{ user.username }}, 欢迎评论~</label>
-                        <textarea name="text" id="comment_text" class="form-control" rows="3"></textarea>
-                    </div>
-                    <input type="hidden" name="object_id", value="{{ blog.pk }}">
-                    <input type="hidden" name="content_type" value="blog">
-                    <input type="submit" value="发表" class="btn btn-primary">
+                    <label for="comment_text">{{ user.username }}, 欢迎评论~</label>
+                    {% for field in comment_forms %}
+                        {{ field }}
+                    {% endfor %}
+                    <input type="submit" value="发表" class="btn btn-primary pull-right">
                 </form>
             {% else %}
                 <h4>文明评论，请先登录！</h4>
