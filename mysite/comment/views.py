@@ -25,7 +25,7 @@ def update_comment(request):
         comment.save()
 
         data['text'] = comment.text
-        data['comment_time'] = comment.comment_time.strftime('%Y-%m-%d %H:%M:%S')
+        data['comment_time'] = comment.comment_time.timestamp()
         data['username'] = comment.user.username
         data['status'] = 'SUCCESS'
 
