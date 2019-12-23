@@ -53,3 +53,15 @@ p#reply_title{
     border-bottom: 1px dashed #ccc;
     padding-bottom: 0.5em;
 }
+div.like{
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 0.5em;
+    color: #337ab7;
+    cursor: pointer;
+    display: inline-block;
+}
+
+div.like .active{
+    color: #f22;
+}

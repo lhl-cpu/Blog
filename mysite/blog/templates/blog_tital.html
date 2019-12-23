@@ -8,6 +8,8 @@ active
 
 {% load staticfiles %}
 {% load comment_tags %}
+{% load likes_tags %}
+
 {% block head_extends %}
     <link rel="stylesheet" type="text/css" href="{% static "blog.css" %}">
     <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
@@ -30,7 +32,11 @@ active
                         <li><span aria-hidden="true">阅读量({{ blog.get_read_num }})</li>
                         <li><span aria-hidden="true">评论量({% get_comment_count blog %})</span></li>
                     </ul><br>
-                    <p>{{ blog.content|safe }}</p><br>
+                    <p>{{ blog.content|safe }}</p>
+                    <div class="like" onclick="likeChange(this,'{% get_like_content blog %}',{{ blog.pk }})">
+                        <span class="glyphicon glyphicon-thumbs-up {% get_like_status blog %}"></span>
+                        <span class="like_num">{% get_like_count blog %}</span>
+                    </div>
                     <div>
                         <p>
                             {% if previous_blog %}
@@ -85,6 +91,10 @@ active
                             <div id="comment_{{ comment.pk }}">
                                 {{ comment.text|safe }}
                             </div>
+                            <div class="like" onclick="likeChange(this,'{% get_like_content comment %}',{{ comment.pk }})">
+                                <span class="glyphicon glyphicon-thumbs-up {% get_like_status comment %}"></span>
+                                <span class="like_num">{% get_like_count comment %}</span>
+                            </div>
                             <a href="javascript:reply({{ comment.pk }});">回复</a>
 
                             
@@ -96,6 +106,10 @@ active
                                     <span>{{ reply.reply_to.username }}：</span>
                                     <div id="comment_{{ reply.pk }}">
                                         {{ reply.text|safe }}
+                                    </div>
+                                    <div class="like" onclick="likeChange(this,'{% get_like_content reply %}',{{ reply.pk }})">
+                                        <span class="glyphicon glyphicon-thumbs-up {% get_like_status reply %}"></span>
+                                        <span class="like_num">{% get_like_count reply %}</span>
                                     </div>
                                     <a href="javascript:reply({{ reply.pk }});">回复</a>
                                 </div>                                    
@@ -183,5 +197,39 @@ active
         });
         return false;
     });
+
+    function likeChange(obj, content_type, object_id){
+        var is_like = obj.getElementsByClassName('active').length == 0
+        $.ajax({
+            url: "{% url 'like_change' %}",
+            type:'GET',
+            data:{
+                content_type: content_type,
+                object_id: object_id,
+                is_like: is_like
+            },
+            cache:false,
+            success: function(data){
+                console.log(data)
+                if(data['status']=='SUCCESS'){
+                        // 更新点赞状态
+                        var element = $(obj.getElementsByClassName('glyphicon'));
+                        if(is_like){
+                            element.addClass('active');
+                        }else{
+                            element.removeClass('active');
+                        }
+                        // 更新点赞数量
+                        var like_num = $(obj.getElementsByClassName('like_num'));
+                        like_num.text(data['like_num']);
+                    }else{
+                        alert(data['message']);
+                    }
+            },
+            error: function(xhr){
+                console.log(xhr)
+            }
+        });
+    }
 </script>
 {% endblock %}
