@@ -1,6 +1,6 @@
 ## 用于个人学习Django ##
 
-试用Bootstrap美化页面
+使用Bootstrap美化页面
 
 pip install requirements.txt导入配置环境
 
